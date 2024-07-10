@@ -1,0 +1,11 @@
+version: '3.0'
+services:
+  web-app:
+    image: feoheo/test-web
+    volumes:
+      - /home/seth/passion/web-app:/app
+    ports:
+      - "3000:3000"
+    stdin_open: true #-i
+    tty: true        #-t
+    command: /bin/bash

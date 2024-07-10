@@ -1,0 +1,33 @@
+/bin/sh -c #(nop)  LABEL devcontainer.metadata=[ {"id":"ghcr.io/devcontainers/features/common-utils:2"}, {"remoteUser":"vscode"}, {"customizations":{"vscode":{"extensions":[]}},"remoteUser":"root"} ]
+/bin/sh -c #(nop)  ENV PORT=8080
+/bin/sh -c chmod 755 /etc/init.d/autocommit /usr/bin/autocommit
+/bin/sh -c #(nop) COPY file:37c2060156a472c9442b0e530acc91d735929183f50c0ded7c4081c459b42c8f in /usr/bin/autocommit 
+/bin/sh -c #(nop) COPY file:044978f2491456589370124ab062ac8ea7bd8a0dfbdb0f06d87326fdbb85388a in /etc/init.d/autocommit 
+/bin/sh -c chmod 755 /usr/local/sbin/express &&     sed -i 's/cache *: *argv\.c *,/cache: argv.c || -1,/' /usr/local/lib/node_modules/http-server/bin/http-server &&     sed -i 's/Cache *time *(max-age) *in seconds *\[3600\],/Cache time (max-age) in seconds [Disabled],/' /usr/local/lib/node_modules/http-server/bin/http-server &&     sed -i "s/chalk.cyan('3600 seconds')/chalk.red('disabled')/" /usr/local/lib/node_modules/http-server/bin/http-server
+/bin/sh -c #(nop) COPY file:724647c479c8f81cc3c18d4086e3e9338264e16ab9cd908a6c441ebd7a08ebde in /usr/local/lib/node_modules/express-generator/templates/js/index.html 
+/bin/sh -c #(nop) COPY file:880475f8c680972c6cc433822c566d4faae63fd002e8e481711822da50e361ce in /usr/local/sbin/express 
+/bin/sh -c curl -Lo /tmp/juice-shop.tar.gz https://github.com/juice-shop/juice-shop/releases/download/v14.5.1/juice-shop-14.5.1_node18_linux_x64.tgz &&     tar -xzf /tmp/juice-shop.tar.gz -C /tmp/ &&     mv /tmp/juice-shop_14.5.1 /opt/juice-shop &&     rm -f /tmp/juice-shop.tar.gz &&     chmod 755 /usr/bin/juice-shop
+/bin/sh -c #(nop) COPY file:72f89baf4e1c30ffcd80a44cae7c4ff51bb0291132fa1fcccbd7d115064d3fee in /usr/bin/juice-shop 
+/bin/sh -c mysqld_safe --initialize-insecure --secure-file-priv="" --performance_schema=OFF --console &&     (mysqld_safe --init-file=/etc/mysql/init.sql --secure-file-priv="" --performance_schema=OFF &) && sleep 20 && killall -SIGTERM mysqld &&     rm -rf /var/log/mysql/*
+/bin/sh -c #(nop) COPY file:c81f8a58377d453cf7ce05ee798432b7733f549311092e0b447cf1a7245d3473 in /etc/mysql/init.sql 
+/bin/sh -c #(nop) COPY file:06a32b9cc44dd84cf1bb455ad29e511f4ce064195ab42bc34591ad27a3233fe5 in /etc/mysql/mysql.conf.d/mysqld.cnf 
+/bin/sh -c apt update &&     apt install --no-install-recommends --yes         coreutils         curl         dnsutils         dos2unix         jq         mysql-client         mysql-server         nano         openssh-client         sed         unzip         vim         zip         &&     curl --location https://raw.githubusercontent.com/tj/n/master/bin/n --output /usr/local/bin/n &&     chmod a+x /usr/local/bin/n &&     n 18.14.2 &&     curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg &&     chmod go+r /usr/share/keyrings/githubcli-archive-keyring.gpg &&     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null &&     apt update &&     apt install gh --yes &&     npm install --global         eslint         express-generator@4.16.1         html-validate@7         http-server@14.1.1         &&     apt clean --yes &&     rm -rf /var/lib/apt/lists/*
+LABEL devcontainer.metadata=[ {"id":"ghcr.io/devcontainers/features/common-utils:2"}, {"remoteUser":"vscode"} ]
+USER root
+ARG _DEV_CONTAINERS_IMAGE_USER=root
+RUN /bin/sh -c cd /tmp/build-features/common-utils_1 && chmod +x ./devcontainer-features-install.sh && ./devcontainer-features-install.sh # buildkit
+RUN /bin/sh -c echo "_CONTAINER_USER_HOME=$(getent passwd root | cut -d: -f6)" >> /tmp/build-features/devcontainer-features.builtin.env && echo "_REMOTE_USER_HOME=$(getent passwd vscode | cut -d: -f6)" >> /tmp/build-features/devcontainer-features.builtin.env # buildkit
+COPY /tmp/build-features /tmp/build-features # buildkit
+USER root
+LABEL dev.containers.timestamp=Wed, 25 Jan 2023 00:06:50 GMT
+LABEL dev.containers.source=https://github.com/devcontainers/images
+LABEL dev.containers.release=v0.2.39
+LABEL dev.containers.variant=jammy
+LABEL dev.containers.id=base-ubuntu
+LABEL version=1.0.7
+COPY meta.env /usr/local/etc/vscode-dev-containers/ # buildkit
+LABEL dev.containers.features=common
+/bin/sh -c set -ex;  if ! command -v gpg > /dev/null; then   apt-get update;   apt-get install -y --no-install-recommends    gnupg    dirmngr   ;   rm -rf /var/lib/apt/lists/*;  fi
+/bin/sh -c set -eux;  apt-get update;  apt-get install -y --no-install-recommends   ca-certificates   curl   netbase   wget   tzdata  ;  rm -rf /var/lib/apt/lists/*
+/bin/sh -c #(nop)  CMD ["bash"]
+/bin/sh -c #(nop) ADD file:481dd2da6de71525248eba186feeeafcc73cc956ade0a196a4e8b0c2424e74b9 in / 
