@@ -8,4 +8,30 @@ services:
       - "3000:3000"
     stdin_open: true #-i
     tty: true        #-t
+    depends_on:
+      - mysql #The mysql service named declared below
     command: /bin/bash
+    environment:
+      WEB-APP_DB_HOST: mysql #Should match the mysql service name declared below
+      WEB-APP_DB_USER: root
+      WEB-APP_DB_PASSWORD: 'admin'
+      WEB-APP_DB_NAME: testing
+    networks:
+      testingSite:
+        ipv4_address: 192.168.1.21
+
+  mysql:  #This is a name and can be changed, remeber to change 'WEB-APP_DB_HOST'/depends_on accordingly
+    image: "mysql:5.7"
+    environment:
+      MYSQL_DB_NAME: testing
+      MYSQL_ROOT_PASSWORD: 'admin'
+    volumes:
+      - ./database:/var/lib/mysql
+
+networks:
+  testingSite:
+    ipam:
+      driver: default
+      config:
+        - subnet: "192.168.1.0/24"
+
