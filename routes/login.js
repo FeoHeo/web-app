@@ -1,6 +1,16 @@
 var express = require('express');
 var router = express.Router();
 var path = require('path');
+var dbConnection = require('../db')
+
+// dbConnection.connect((err) => {
+//   if(err) {
+//     console.log('Database connection error: ' + err);
+//     return;
+//   }
+//   console.log('Database connected');
+// })
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -8,13 +18,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/' , function(req,res,next) {
-  const sampleJson = {
-    "username": "sampleName",
-    "userId": 1
-  }
 
-  console.log(req.body[1].username);
-  res.send(req.body[0].username);
+  dbConnection.query('SELECT * FROM Users;' ,async function(err , result) {
+    if(err) {
+      res.status(501).send('Server error' + err)
+    }
+    if(result) {
+      console.log('Showing results')
+      res.send(result);
+    }
+  })
+  
+  //res.sendStatus(500);
 });
 
 
