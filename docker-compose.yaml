@@ -27,6 +27,7 @@ services:
       MYSQL_ROOT_PASSWORD: 'admin'
     volumes:
       - ./database:/var/lib/mysql
+      - ./backup:/backup
 
 networks:
   testingSite:
