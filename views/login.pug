@@ -9,6 +9,7 @@ html(lang="en")
     .login-container
       h2 Login
       form(action="/login", method="POST")
+        script(src="./javascripts/sendLogin.js")
         .form-group
           label(for="username") Username
           input(type="text", id="username", name="username", required)
@@ -16,6 +17,6 @@ html(lang="en")
           label(for="password") Password
           input(type="password", id="password", name="password", required)
         .form-group
-          button(type="submit") Login
+          button(type="button" onclick='triggerLogin()') Login
         .form-group
           a(href="/register") Register

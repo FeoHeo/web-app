@@ -2,14 +2,18 @@ var express = require('express');
 var router = express.Router();
 var path = require('path');
 var dbConnection = require('../db')
+var session = require('express-session');
+const cookieParser = require('cookie-parser');
 
-// dbConnection.connect((err) => {
-//   if(err) {
-//     console.log('Database connection error: ' + err);
-//     return;
-//   }
-//   console.log('Database connected');
-// })
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
+router.use(cookieParser());
+
+router.use(session({
+  secret: 'thisIsSecretKey',
+  resave: false,
+  saveUninitialized: false
+}));
 
 
 /* GET users listing. */
@@ -19,17 +23,19 @@ router.get('/', function(req, res, next) {
 
 router.post('/' , function(req,res,next) {
 
-  dbConnection.query('SELECT * FROM Users;' ,async function(err , result) {
+  var query = 'SELECT * FROM Users WHERE userName = ?'
+
+  dbConnection.query(query ,[req.body.username],async function(err , result) {
     if(err) {
       res.status(501).send('Server error' + err)
     }
-    if(result) {
-      console.log('Showing results')
+    if(req.body.password === result[0].userPassword) {
       res.send(result);
+    } else {
+      console.log(req.body.password + ' AND ' + result[0].userPassword)
+      res.sendStatus(401)
     }
   })
-  
-  //res.sendStatus(500);
 });
 
 
