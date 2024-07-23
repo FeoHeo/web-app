@@ -7,13 +7,13 @@ WORKDIR /app
 # Copy package.json and package-lock.json (if available)
 COPY package*.json app.js ./
 
-# Install dependencies
+#Install dependencies
 RUN npm install &&\
     npm install express &&\
     npm install -y -g nodemon
 
 # Copy the rest of the application code
-COPY . .
+COPY . ./
 
 # Expose the port your app runs on (default is 3000 for many Node apps)
 EXPOSE 3000

@@ -1,9 +1,9 @@
 version: '3.0'
 services:
   web-app:
-    image: feoheo/test-web
+    image: docker.io/feoheo/test-web
     volumes:
-      - /home/seth/passion/web-app:/app
+      - ./:/app #CHECK THIS FROM A DIFFERENT COMPUTER
     ports:
       - "3000:3000"
     stdin_open: true #-i
@@ -22,8 +22,6 @@ services:
 
   mysql:  #This is a name and can be changed, remeber to change 'WEB-APP_DB_HOST'/depends_on accordingly
     image: "mysql:5.7"
-    ports:
-      - 3306:3306
     environment:
       MYSQL_DB_NAME: testing
       MYSQL_ROOT_PASSWORD: 'admin'
