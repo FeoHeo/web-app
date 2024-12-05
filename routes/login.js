@@ -29,8 +29,9 @@ router.post('/' , function(req,res,next) {
     if(err) {
       res.status(501).send('Server error' + err)
     }
-    if(req.body.password === result[0].userPassword) {
-      res.send(result);
+    if(req.body.password === result.userPassword) {
+      console.log('logging in')
+      res.send('Logged in');
     } else {
       console.log(req.body.password + ' AND ' + result[0].userPassword)
       res.sendStatus(401)
